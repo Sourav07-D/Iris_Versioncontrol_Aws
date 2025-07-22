@@ -23,5 +23,6 @@ def build_features(input_path, output_path):
         logging.error("Feature engineering failed", exc_info=True)
         raise e
 
-if __name__ == "__main__":
-    build_features("data/processed/iris_clean.csv", "data/processed/iris_features.csv")
+if __name__  == "__main__":
+    # Same code, change I/O
+    build_features("data/processed/iris_clean_v2.csv", "data/processed/iris_features_v2.csv")

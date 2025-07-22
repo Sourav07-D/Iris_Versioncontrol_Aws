@@ -1,19 +1,22 @@
-ingest_data:
-  output_path: data/raw/iris.csv
+ingest:
+  source_path: data/external/iris_original.csv
+  dest_path: data/raw/iris_v2.csv
 
-preprocess_data:
-  input_path: data/raw/iris.csv
-  output_path: data/processed/iris_clean.csv
+preprocessing:
+  input_path: data/raw/iris_v2.csv
+  output_path: data/processed/iris_clean_v2.csv
 
 feature_engineering:
-  input_path: data/processed/iris_clean.csv
-  output_path: data/processed/iris_features.csv
+  input_path: data/processed/iris_clean_v2.csv
+  output_path: data/processed/iris_features_v2.csv
 
-train_model:
-  input_path: data/processed/iris_features.csv
-  model_path: models/model.pkl
+train:
+  input_path: data/processed/iris_features_v2.csv
+  model_path: models/model_v2.pkl
+  n_estimators: 100
+  random_state: 42
 
-evaluate_model:
-  input_path: data/processed/iris_features.csv
-  model_path: models/model.pkl
+evaluate:
+  input_path: data/processed/iris_features_v2.csv
+  model_path: models/model_v2.pkl
   report_path: reports/metrics.txt

@@ -1,28 +1,27 @@
 import pandas as pd
-import logging
+import numpy as np
 import os
+import logging
 
-import yaml
+logging.basicConfig(level=logging.INFO)
 
-with open("params.yaml") as f:
-    params = yaml.safe_load(f)
-output_path = params["ingest_data"]["output_path"]
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
-def ingest_data(output_path):
+def ingest_modified_data(output_path):
     try:
-        logging.info("Reading Iris dataset from sklearn")
         from sklearn.datasets import load_iris
         iris = load_iris(as_frame=True)
         df = iris.frame
 
+        # Simulate change: remove class 2, add Gaussian noise to features
+        df = df[df['target'] != 2]
+        noise = np.random.normal(0, 0.2, df.iloc[:, :-1].shape)
+        df.iloc[:, :-1] += noise
+
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         df.to_csv(output_path, index=False)
-        logging.info(f"Saved raw data to {output_path}")
+        logging.info("Saved modified dataset.")
     except Exception as e:
-        logging.error("Data ingestion failed", exc_info=True)
+        logging.error("Failed to modify and ingest data", exc_info=True)
         raise e
 
 if __name__ == "__main__":
-    ingest_data(output_path)
+    ingest_modified_data("data/raw/iris_v2.csv")
