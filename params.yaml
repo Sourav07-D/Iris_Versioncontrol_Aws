@@ -1,0 +1,19 @@
+ingest_data:
+  output_path: data/raw/iris.csv
+
+preprocess_data:
+  input_path: data/raw/iris.csv
+  output_path: data/processed/iris_clean.csv
+
+feature_engineering:
+  input_path: data/processed/iris_clean.csv
+  output_path: data/processed/iris_features.csv
+
+train_model:
+  input_path: data/processed/iris_features.csv
+  model_path: models/model.pkl
+
+evaluate_model:
+  input_path: data/processed/iris_features.csv
+  model_path: models/model.pkl
+  report_path: reports/metrics.txt
